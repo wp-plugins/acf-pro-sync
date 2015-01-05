@@ -2,7 +2,7 @@
 /*
 Plugin Name: ACF Pro JSON Sync
 Description: Sync Advanced Custom Fields fields stored in json files into the database. Ideal for using ACF in multiple environments or in a team setting.
-Version: 1.0
+Version: 1.0.1
 Author: O3 World
 Author URI: http://o3world.com
 */
@@ -10,7 +10,7 @@ Author URI: http://o3world.com
 
  
 
-function check_json_dirs() {
+function acf_sync_check_json_dirs() {
 	//Get all json save points
 	$json_dirs = acf_get_setting('load_json');
 
@@ -29,9 +29,9 @@ function check_json_dirs() {
 	return false;
 }
 
-function import_json_folder() {
+function acf_sync_import_json_folder() {
 	// tell ACF NOT to save to JSON
-	add_filter('acf/settings/save_json', 'import_json_no_save', 99 );
+	add_filter('acf/settings/save_json', 'acf_sync_import_json_no_save', 99 );
 	
 	
 	// Remove previous field groups in DB
@@ -51,14 +51,14 @@ function import_json_folder() {
 	$json_dirs = acf_get_setting('load_json');
 
 	foreach ( $json_dirs as $dir ) {
-	    import_json_field_groups($dir);
+	    acf_sync_import_json_field_groups($dir);
 	}
 
 }
 
  
 // Import field groups from local JSON to make them editable via Admin UI (dev mode)
-function import_json_field_groups($directory) {
+function acf_sync_import_json_field_groups($directory) {
  	
  	$dir = new DirectoryIterator( $directory );
     
@@ -140,7 +140,7 @@ function import_json_field_groups($directory) {
  
 }
 
-function get_acf_fields_list() {
+function acf_sync_get_fields_list() {
     $json_dirs = acf_get_setting('load_json');
 
     $json_files = array();
@@ -166,7 +166,7 @@ function get_acf_fields_list() {
 }
 
  
-function import_json_no_save($paths) {
+function acf_sync_import_json_no_save($paths) {
     return null;
 }
 
@@ -197,6 +197,6 @@ function acf_sync_page(){
 
 
 function run_acf_sync() {
-    import_json_folder();
+    acf_sync_import_json_folder();
     include 'views/sync-complete.php';
 }

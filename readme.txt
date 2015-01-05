@@ -5,7 +5,7 @@ Requires at least: 3.5.0
 Tested up to: 4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Sync Advanced Custom Fields fields stored in json files into the database. Ideal for using ACF in multiple environments or in a team setting.
 
